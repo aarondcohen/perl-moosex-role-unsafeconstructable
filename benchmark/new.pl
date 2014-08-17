@@ -22,7 +22,6 @@ use lib "$FindBin::Bin/../lib";
 
 	sub _build_val4 { 'bro' }
 
-	__PACKAGE__->declare_unsafe_class;
 	__PACKAGE__->meta->make_immutable;
 }
 
@@ -33,7 +32,6 @@ use lib "$FindBin::Bin/../lib";
 
 	has [map { "val$_" } (1 .. 60)] => (is => 'ro', isa => 'Str', default => 'some rather long string' x 10);
 
-	__PACKAGE__->declare_unsafe_class;
 	__PACKAGE__->meta->make_immutable;
 }
 

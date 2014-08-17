@@ -17,11 +17,11 @@ use namespace::autoclean;
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -39,7 +39,6 @@ Example usage:
 
 	has field => (is => 'ro', isa => 'HashRef[ArrayRef[Str]]');
 
-	__PACKAGE__->declare_unsafe_class;
 	__PACKAGE__->meta->make_immutable;
 
 	package main;
@@ -49,18 +48,33 @@ Example usage:
 
 =cut
 
+do {
+	my $moose_meta = Moose::Meta::Class->meta;
+	$moose_meta->make_mutable;
+	$moose_meta->add_after_method_modifier('make_immutable', sub {
+		my $meta = shift;
+		$meta->name->declare_unsafe_class if $meta->name->does(__PACKAGE__);
+	});
+	$moose_meta->make_immutable;
+};
+
+
 =head1 METHODS
 
 =cut
 
 =head2 declare_unsafe_class
 
-Declare the shadow class to be used for unsafe instantiation.  This must be
+Declare the shadow class to be used for unsafe instantiation.  Any class using
+MooseX::Role::UnsafeConstructable role will call declare_unsafe_class
+automatically when made immutable.  Otherwise, declare_unsafe_class must be
 called after the original class is fully declared to ensure all attributes are
-properly declared.  For each attribute, the shadow class will preserve: name,
-default, builder, and init_arg.  All other options will be dropped.  This
+properly shadowed.
+
+For each attribute, the shadow class will preserve:
+name, default, builder, and init_arg.  All other options will be dropped.  This
 should provide behavior that mostly matches normal instantiation, with the one
-caveat that any field declared uninitializble (with init_arg => undef) can now
+caveat that any field declared uninitializable (with init_arg => undef) can now
 be set.  This is considered a feature, not a bug.
 
 =cut
@@ -77,7 +91,7 @@ sub declare_unsafe_class {
 			$_->has_default  ? (default => $_->default) : (),
 			$_->has_builder  ? (builder => $class . '::' . $_->builder) : (),
 			$_->has_init_arg ? (init_arg => $_->init_arg) : (),
-		) } $class->meta->get_all_attributes]
+		) } $class->meta->get_all_attributes],
 	));
 	$class->unsafe_class->meta->make_immutable;
 
