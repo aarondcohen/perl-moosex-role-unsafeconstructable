@@ -17,11 +17,11 @@ use namespace::autoclean;
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -114,21 +114,21 @@ Instantiate the class, bypassing access and type constraints.
 
 sub unsafe_new { shift->unsafe_class->new(@_)->promote }
 
-=head1 ACKNOWLEDGEMENTS
-
-This module is brought to you by L<Shutterstock|http://www.shutterstock.com/>
-(L<@ShutterTech|https://twitter.com/ShutterTech>).  Additional open source
-projects from Shutterstock can be found at
-L<code.shutterstock.com|http://code.shutterstock.com/>.
-
 =head1 AUTHOR
 
 Aaron Cohen, C<< <aarondcohen at gmail.com> >>
 
+=head1 ACKNOWLEDGEMENTS
+
+This module was made possible by L<Shutterstock|http://www.shutterstock.com/>
+(L<@ShutterTech|https://twitter.com/ShutterTech>).  Additional open source
+projects from Shutterstock can be found at
+L<code.shutterstock.com|http://code.shutterstock.com/>.
+
 =head1 BUGS
 
 Please report any bugs or feature requests to C<bug-MooseX-Role-UnsafeConstructable at rt.cpan.org>, or through
-the web interface at L<https://github.com/aarondcohen/MooseX-Role-UnsafeConstructable/issues>.  I will
+the web interface at L<https://github.com/aarondcohen/perl-moosex-role-unsafeconstructable/issues>.  I will
 be notified, and then you'll automatically be notified of progress on your bug as I make changes.
 
 =head1 SUPPORT
@@ -143,11 +143,11 @@ You can also look for information at:
 
 =item * Official GitHub Repo
 
-L<https://github.com/aarondcohen/MooseX-Role-UnsafeConstructable>
+L<https://github.com/aarondcohen/perl-moosex-role-unsafeconstructable>
 
 =item * GitHub's Issue Tracker (report bugs here)
 
-L<https://github.com/aarondcohen/MooseX-Role-UnsafeConstructable/issues>
+L<https://github.com/aarondcohen/perl-moosex-role-unsafeconstructable/issues>
 
 =item * CPAN Ratings
 
